@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  description: ""
+  title: Online Market
+  version: "1.0"
+paths:
+  ######################################
+  #                   Product
+  ######################################
+  /product:
+    post:
+        tags:
+          - Product
+        description: |
+          Create new product
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProduct"
+        responses:
+          "200":
+            description: Product created
+          "400":
+            description: Product not created
+  /product/{price_min};{price_max}&{sorting}:
+    get:
+        tags:
+          - Product
+        description: |
+          Get product with sorting by price or name and filter by price and name
+        parameters:
+        - description: filter parameter
+          in: path
+          name: price_min
+          required: false
+          schema:
+            type: integer
+            format: price
+          example: "1234"
+        - description: filter parameter
+          in: path
+          name: price_max
+          required: false
+          schema:
+            type: integer
+            format: price
+          example: "4000"
+        - description: sorting params
+          in: path
+          name: price_up, price_down, name_up, name_down
+          required: false
+          schema:
+            type: string
+          example: price_down
+        responses:
+          "200":
+            description: Successfully getting data
+          "400":
+            description: Error with getting data
+  /product/{product_id}:
+    delete:
+      tags:
+        - Product
+      description: |
+        Delete product
+      parameters:
+        - description: Product id
+          in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+            format: id
+          example: "5232352"
+      responses:
+        "200":
+          description: Successfully delete product
+        "400":
+          description: Product not deleted
+  ######################################
+  #                   CART
+  ######################################
+  /cart:
+    post:
+      tags:
+        - Cart
+      description: |
+        Add new product in the cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CardAddProduct"
+      responses:
+        "200":
+          description: Product added
+        "400":
+          description: Product not added
+    put:
+        tags:
+          - Cart
+        description: |
+          Change count of product
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CardUpdateProductCount"
+        responses:
+          "200":
+            description: Successfully changed count of products in cart
+          "400":
+            description: Count of products in cart not changed
+
+components:
+  schemas:
+# -------------Product-----------
+    CreateProduct:
+      type: object
+      required:
+        - name
+        - manufacturer
+        - price
+      properties:
+        name:
+          type: string
+        manufacturer:
+          type: string
+        price:
+          type: integer
+      example:
+          name: SmartD
+          manufacturer: NikSul
+          price: 10000
+
+# -------------Card-----------
+
+    CardAddProduct:
+      type: object
+      required:
+        - cart_id
+        - product_id
+      properties:
+        product_id:
+          type: integer
+      example:
+        cart_id: 1211
+        product_id: 23232301
+
+    CardUpdateProductCount:
+      type: object
+      required:
+        - cart_id
+        - product_id
+        - count
+      properties:
+        product_id:
+          type: integer
+      example:
+        cart_id: 1211
+        product_id: 23232301
+        count: -2
