@@ -1,6 +1,5 @@
 
 from aioflask import Flask
-from sqlalchemy_utils import database_exists
 from starlette import status
 
 from server.cart.cart_handler import CartHandler

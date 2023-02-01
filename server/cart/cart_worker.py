@@ -16,10 +16,6 @@ class CartWorker(Cart):
         """
         local_session = await get_session()
         async with local_session() as session:
-            ###############
-            # нужно проверять ли, что еще не добавлен такой товар в корзину
-            ###############
-
             await CartListTblWorker.add(cart_id=cart_id,
                                         product_id=product_id,
                                         local_session=session)
