@@ -5,6 +5,29 @@ info:
   version: "1.0"
 paths:
   ######################################
+  #                   Health
+  ######################################
+  /health/app:
+    get:
+      tags:
+        - Health
+      description: |
+        Check app statement
+      responses:
+        "200":
+          description: App live
+  /health/db:
+    get:
+      tags:
+        - Health
+      description: |
+        Check db statement
+      responses:
+        "200":
+          description: DB live
+        "500":
+          description: DB not connected
+  ######################################
   #                   Product
   ######################################
   /product:
