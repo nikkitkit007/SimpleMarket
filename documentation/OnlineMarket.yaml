@@ -46,13 +46,29 @@ paths:
             description: Product created
           "400":
             description: Product not created
-  /product/{price_min};{price_max}&{sorting}:
+  /product/{name}&{manufacturer}&{price_min}&{price_max}&{sorting}:
     get:
         tags:
           - Product
         description: |
           Get product with sorting by price or name and filter by price and name
         parameters:
+        - description: filter parameter
+          in: path
+          name: name
+          required: false
+          schema:
+            type: integer
+            format: price
+          example: "Phone1"
+        - description: filter parameter
+          in: path
+          name: manufacturer
+          required: false
+          schema:
+            type: integer
+            format: price
+          example: "FabricX"
         - description: filter parameter
           in: path
           name: price_min

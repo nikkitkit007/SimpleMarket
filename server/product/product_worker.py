@@ -18,7 +18,7 @@ class ProductWorker(Product):
             await session.commit()
 
     @staticmethod
-    async def get(price_min: int = None, price_max: int = None, sorting: str = None) -> dict:
+    async def get(name: str = None, manufacturer: str = None, price_min: int = None, price_max: int = None, sorting: str = None) -> dict:
         try:
             local_session = await get_session()
         except Exception:
@@ -26,7 +26,7 @@ class ProductWorker(Product):
 
         async with local_session() as session:
             try:
-                products = await ProductTblWorker.get_all(session, price_min, price_max, sorting)
+                products = await ProductTblWorker.get_all(session, name, manufacturer, price_min, price_max, sorting)
                 await session.commit()
             except Exception:
                 raise ValueError(f"Problem with getting products")

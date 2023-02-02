@@ -41,6 +41,8 @@ _____
 ```
 curl  -H 'Content-Type: application/json' --data '{"name":"SmartD","manufacturer":"NikSul", "price":10001}' http://localhost:8080/product
 curl  -H 'Content-Type: application/json' --data '{"name":"InterP","manufacturer":"NikSul", "price":5555}' http://localhost:8080/product
+curl  -H 'Content-Type: application/json' --data '{"name":"ABC","manufacturer":"Somebody", "price":123}' http://localhost:8080/product
+
 
 
 curl http://localhost:8080/product
@@ -50,6 +52,10 @@ curl "http://localhost:8080/product?sorting=price_up"
 curl "http://localhost:8080/product?price_max=200000&sorting=price_down"
 curl "http://localhost:8080/product?price_max=6000&sorting=price_down"
 curl "http://localhost:8080/product?price_min=5800&price_max=6000"
+curl "http://localhost:8080/product?manufacturer=NikSul"
+curl "http://localhost:8080/product?name=ABC"
+curl "http://localhost:8080/product?name=NO_NAME"
+
 
 curl "http://localhost:8080/product?price_min=0&price_max=-500"
 

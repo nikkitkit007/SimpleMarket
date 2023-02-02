@@ -16,9 +16,21 @@ class ProductTblWorker(Product):
         await local_session.execute(add_product_query)
 
     @staticmethod
-    async def get_all(local_session, price_min: int = None, price_max: int = None, sorting: str = None) -> list:
+    async def get_all(local_session,
+                      name: str = None,
+                      manufacturer: str = None,
+                      price_min: int = None,
+                      price_max: int = None,
+                      sorting: str = None) -> list:
 
+        print("---------", name, manufacturer)
         query = select(Product)
+        if name:
+            query = query. \
+                where(and_(Product.name == str(name)))
+        if manufacturer:
+            query = query. \
+                where(and_(Product.manufacturer == str(manufacturer)))
         if price_min:
             query = query. \
                 where(and_(Product.price >= int(price_min)))
