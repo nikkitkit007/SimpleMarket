@@ -34,6 +34,9 @@ _____
 **Запустим микросервис** командой:
 > python3 app.py
 
+**Запустим БД** командой:
+> docker-compose up
+
 Для тестирования можно воспользоваться представленными ниже curl запросами:
 ```
 curl  -H 'Content-Type: application/json' --data '{"name":"SmartD","manufacturer":"NikSul", "price":10001}' http://localhost:8080/product

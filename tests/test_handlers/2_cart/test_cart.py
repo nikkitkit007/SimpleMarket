@@ -17,7 +17,7 @@ class TestCart:
 
         product_id = 1
         cart_id = 1
-        count = -10
+        count = 10
         upd_params = {"product_id": product_id,
                       "cart_id": cart_id,
                       "count": count}
