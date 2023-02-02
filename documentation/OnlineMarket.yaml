@@ -144,6 +144,8 @@ components:
       properties:
         product_id:
           type: integer
+        cart_id:
+          type: integer
       example:
         cart_id: 1211
         product_id: 23232301
@@ -156,6 +158,10 @@ components:
         - count
       properties:
         product_id:
+          type: integer
+        cart_id:
+          type: integer
+        count:
           type: integer
       example:
         cart_id: 1211
