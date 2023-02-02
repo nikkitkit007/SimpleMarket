@@ -18,14 +18,3 @@ services:
     ports:
       - "5432:5432"
     restart: always
-
-#  web:
-#    container_name: web
-#    build: .
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - db
-#    links:
-#      - db
-#    restart: always
