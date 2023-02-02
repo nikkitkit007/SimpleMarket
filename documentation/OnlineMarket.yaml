@@ -56,28 +56,28 @@ paths:
         responses:
           "200":
             description: Successfully getting data
-          "400":
+          "404":
             description: Error with getting data
-  /product/{product_id}:
-    delete:
-      tags:
-        - Product
-      description: |
-        Delete product
-      parameters:
-        - description: Product id
-          in: path
-          name: product_id
-          required: true
-          schema:
-            type: integer
-            format: id
-          example: "5232352"
-      responses:
-        "200":
-          description: Successfully delete product
-        "400":
-          description: Product not deleted
+#  /product/{product_id}:
+#    delete:
+#      tags:
+#        - Product
+#      description: |
+#        Delete product
+#      parameters:
+#        - description: Product id
+#          in: path
+#          name: product_id
+#          required: true
+#          schema:
+#            type: integer
+#            format: id
+#          example: "5232352"
+#      responses:
+#        "200":
+#          description: Successfully delete product
+#        "400":
+#          description: Product not deleted
   ######################################
   #                   CART
   ######################################

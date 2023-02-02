@@ -1,6 +1,5 @@
 from sqlalchemy import select, insert, and_, desc
 
-from server import logger
 from data_base.models.product_model import Product
 
 
@@ -18,9 +17,7 @@ class ProductTblWorker(Product):
 
     @staticmethod
     async def get_all(local_session, price_min: int = None, price_max: int = None, sorting: str = None) -> list:
-        """
 
-        """
         query = select(Product)
         if price_min:
             query = query. \
@@ -42,7 +39,6 @@ class ProductTblWorker(Product):
 
         result = await local_session.execute(query)
         products = result.scalars().all()
-
         return products
 
     @staticmethod

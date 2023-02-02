@@ -14,19 +14,33 @@ class CartWorker(Cart):
         1) добавляем продукт в таблицу CartList
         2) обновляем значения в таблице Cart в соответствии с ценой товара(price) и его количеством(1)
         """
-        local_session = await get_session()
+        try:
+            local_session = await get_session()
+        except Exception:
+            raise ValueError(f"Problem with getting session to connect to DB")
+
         async with local_session() as session:
-            await CartListTblWorker.add(cart_id=cart_id,
-                                        product_id=product_id,
-                                        local_session=session)
+            try:
+                await CartListTblWorker.add(cart_id=cart_id,
+                                            product_id=product_id,
+                                            local_session=session)
+            except Exception as e:
+                raise ValueError(f"Problem with adding Product {product_id} in Cart {cart_id}")
+
             await CartTblWorker.update_cart(cart_id=cart_id,
                                             product_id=product_id,
+                                            count=1,
                                             local_session=session)
             await session.commit()
 
     @staticmethod
     async def upd_product_count(product_id: int, cart_id: int, count: int) -> bool:
-        local_session = await get_session()
+
+        try:
+            local_session = await get_session()
+        except Exception:
+            raise ValueError(f"Problem with getting session to connect to DB")
+
         if count == 0:
             return True
 
@@ -34,6 +48,9 @@ class CartWorker(Cart):
             product_count_in_cart = await CartListTblWorker.get_product_count_in_cart(cart_id=cart_id,
                                                                                       product_id=product_id,
                                                                                       local_session=session)
+            if not product_count_in_cart:
+                raise ValueError(f"Product with id '{product_id}' does not exist in Cart with id '{cart_id}'.")
+
             if int(product_count_in_cart) + count > 0:
                 await CartListTblWorker.update_product_count(cart_id=cart_id,
                                                              product_id=product_id,
@@ -44,7 +61,8 @@ class CartWorker(Cart):
                                                                  product_id=product_id,
                                                                  local_session=session)
             else:
-                return False        # new error
+                raise ValueError(f"Cart with id '{cart_id}' "
+                                 f"does not have with count of product with id '{product_id}'.")
 
             await CartTblWorker.update_cart(cart_id=cart_id,
                                             product_id=product_id,
@@ -52,17 +70,14 @@ class CartWorker(Cart):
                                             local_session=session)
             await session.commit()
 
-    @staticmethod
-    async def get(cart_id: int):
-        return None
+    # @staticmethod
+    # async def get(cart_id: int):
+    #     return None
 
 
-async def create_test_cart():
+async def create_test_cart(cart_id: int):
     local_session = await get_session()
     async with local_session() as session:
-        await CartTblWorker.add(1, session)
+        await CartTblWorker.add(cart_id, session)
         await session.commit()
 
-
-if __name__ == "__main__":
-    asyncio.run(create_test_cart())

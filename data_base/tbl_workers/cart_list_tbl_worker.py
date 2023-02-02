@@ -1,6 +1,5 @@
 from sqlalchemy import select, insert, and_, update, delete
 
-from server import logger
 from data_base.models.cart_list_model import CartList
 
 
@@ -21,7 +20,6 @@ class CartListTblWorker(CartList):
 
         result = await local_session.execute(query)
         products_count = result.scalars().first()
-        print("________", products_count)
         return products_count
 
     @staticmethod

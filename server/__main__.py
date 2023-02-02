@@ -11,6 +11,7 @@ from configurations.config import DefaultSettings
 
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 
 conf = DefaultSettings()
 
@@ -37,9 +38,6 @@ def api_add_url():
     app.add_url_rule(rule=f"/{conf.PATH_PREFIX}/product",
                      view_func=ProductHandler.get,
                      methods=["GET"])
-    app.add_url_rule(rule=f"/{conf.PATH_PREFIX}/product",
-                     view_func=ProductHandler.delete,
-                     methods=["DELETE"])
 
     # ------------------------------------Cart--------------------=---------------
     app.add_url_rule(rule=f"/{conf.PATH_PREFIX}/cart",

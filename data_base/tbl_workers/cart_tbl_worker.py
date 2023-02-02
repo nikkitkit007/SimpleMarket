@@ -1,8 +1,6 @@
-from sqlalchemy import select, insert, update, and_, or_, desc
+from sqlalchemy import select, insert, update, and_
 
-from server import logger
 from data_base.models.cart_model import Cart
-
 from data_base.tbl_workers.product_tbl_worker import ProductTblWorker
 
 
@@ -10,15 +8,16 @@ class CartTblWorker(Cart):
 
     @staticmethod
     async def add(cart_id, local_session):
-        """
-
-        """
 
         cart_obj = {"id": cart_id}
-        add_product_query = insert(Cart).values(
-            cart_obj
-        )
-        await local_session.execute(add_product_query)
+        try:
+            add_product_query = insert(Cart).values(
+                cart_obj
+            )
+            await local_session.execute(add_product_query)
+        except:
+            # temp solution
+            pass
 
     @staticmethod
     async def get(local_session) -> list:
@@ -43,7 +42,7 @@ class CartTblWorker(Cart):
         if product:
             prod_price = product.price
 
-            data_to_update = dict(price=Cart.price+prod_price, count=Cart.count+count)
+            data_to_update = dict(price=Cart.price+prod_price*count, count=Cart.count+count)
 
             query = update(Cart).\
                 where(and_(Cart.id == cart_id)).\
