@@ -15,8 +15,10 @@ class ProductHandler:
         success_resp = {"Result": "Product created"}
         no_success_resp = {"Result": "Product not created"}
         data = request.json
+
         try:
             await ProductWorker.add_to_storage(data)
+            logger.info(f"Product with name {data['name']} created")
             return jsonify(success_resp), status.HTTP_200_OK
         except Exception as E:
             logger.error(E)

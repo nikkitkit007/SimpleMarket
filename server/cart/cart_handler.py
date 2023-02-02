@@ -22,6 +22,7 @@ class CartHandler:
             await CartWorker.add_product_to_cart(product_id=product_id,
                                                  cart_id=cart_id)
 
+            logger.info(f"Product with id {product_id} added in cart with id {cart_id}")
             return jsonify(success_resp), status.HTTP_200_OK
         except Exception as E:
             logger.error(E)
@@ -41,6 +42,8 @@ class CartHandler:
             await CartWorker.upd_product_count(product_id=product_id,
                                                cart_id=cart_id,
                                                count=count)
+            logger.info(f"Count product with id {product_id} changed on "
+                        f"{count} in cart with id {cart_id}")
 
             return jsonify(success_resp), status.HTTP_200_OK
         except Exception as E:
