@@ -10,14 +10,10 @@ class CartTblWorker(Cart):
     async def add(cart_id, local_session):
 
         cart_obj = {"id": cart_id}
-        try:
-            add_product_query = insert(Cart).values(
-                cart_obj
-            )
-            await local_session.execute(add_product_query)
-        except:
-            # temp solution
-            pass
+        add_product_query = insert(Cart).values(
+            cart_obj
+        )
+        await local_session.execute(add_product_query)
 
     @staticmethod
     async def get(local_session) -> list:

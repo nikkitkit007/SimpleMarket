@@ -14,18 +14,12 @@ class CartWorker(Cart):
         1) добавляем продукт в таблицу CartList
         2) обновляем значения в таблице Cart в соответствии с ценой товара(price) и его количеством(1)
         """
-        try:
-            local_session = await get_session()
-        except Exception:
-            raise ValueError(f"Problem with getting session to connect to DB")
+        local_session = await get_session()
 
         async with local_session() as session:
-            try:
-                await CartListTblWorker.add(cart_id=cart_id,
-                                            product_id=product_id,
-                                            local_session=session)
-            except Exception as e:
-                raise ValueError(f"Problem with adding Product {product_id} in Cart {cart_id}")
+            await CartListTblWorker.add(cart_id=cart_id,
+                                        product_id=product_id,
+                                        local_session=session)
 
             await CartTblWorker.update_cart(cart_id=cart_id,
                                             product_id=product_id,
@@ -36,10 +30,7 @@ class CartWorker(Cart):
     @staticmethod
     async def upd_product_count(product_id: int, cart_id: int, count: int) -> bool:
 
-        try:
-            local_session = await get_session()
-        except Exception:
-            raise ValueError(f"Problem with getting session to connect to DB")
+        local_session = await get_session()
 
         if count == 0:
             return True

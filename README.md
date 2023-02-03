@@ -71,3 +71,5 @@ curl  -X PUT -H 'Content-Type: application/json' --data '{"cart_id":1, "product_
 curl  -X PUT -H 'Content-Type: application/json' --data '{"cart_id":1, "product_id":1, "count": 11}' http://localhost:8080/cart
 
 ```
+
+Информация о событиях записывается в logger.log (не все события)

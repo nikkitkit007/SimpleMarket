@@ -8,10 +8,7 @@ class ProductWorker(Product):
 
     @staticmethod
     async def add_to_storage(product: dict):
-        try:
-            local_session = await get_session()
-        except Exception:
-            raise ValueError(f"Problem with getting session to connect to DB")
+        local_session = await get_session()
 
         async with local_session() as session:
             await ProductTblWorker.add(product, session)
@@ -19,17 +16,11 @@ class ProductWorker(Product):
 
     @staticmethod
     async def get(name: str = None, manufacturer: str = None, price_min: int = None, price_max: int = None, sorting: str = None) -> dict:
-        try:
-            local_session = await get_session()
-        except Exception:
-            raise ValueError(f"Problem with getting session to connect to DB")
+        local_session = await get_session()
 
         async with local_session() as session:
-            try:
-                products = await ProductTblWorker.get_all(session, name, manufacturer, price_min, price_max, sorting)
-                await session.commit()
-            except Exception:
-                raise ValueError(f"Problem with getting products")
+            products = await ProductTblWorker.get_all(session, name, manufacturer, price_min, price_max, sorting)
+            await session.commit()
 
         all_products = {}
 

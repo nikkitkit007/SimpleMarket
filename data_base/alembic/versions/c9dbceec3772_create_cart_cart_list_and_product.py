@@ -41,6 +41,7 @@ def upgrade() -> None:
         Column('product_id', INTEGER, ForeignKey(f"{config.TBL_PRODUCT}.id"), nullable=False),
         Column('count', INTEGER, nullable=False, default=1),
     )
+    op.create_unique_constraint(None, table_name=config.TBL_CARTLIST, columns=['cart_id', 'product_id'])
 
 
 def downgrade() -> None:

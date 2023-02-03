@@ -3,7 +3,6 @@ from sqlalchemy.dialects.postgresql import INTEGER, TEXT
 
 from data_base import DeclarativeBase
 from data_base.table_config import TBL_PRODUCT
-import json
 
 
 class Product(DeclarativeBase):

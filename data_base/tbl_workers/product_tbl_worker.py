@@ -23,7 +23,6 @@ class ProductTblWorker(Product):
                       price_max: int = None,
                       sorting: str = None) -> list:
 
-        print("---------", name, manufacturer)
         query = select(Product)
         if name:
             query = query. \

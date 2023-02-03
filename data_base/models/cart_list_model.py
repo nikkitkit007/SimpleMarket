@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey
+from sqlalchemy import Column, ForeignKey, UniqueConstraint
 from sqlalchemy.dialects.postgresql import INTEGER, TEXT
 
 from data_base import DeclarativeBase
@@ -9,6 +9,8 @@ import data_base.table_config as config
 
 class CartList(DeclarativeBase):
     __tablename__ = TBL_CARTLIST
+    __table_args__ = (UniqueConstraint('cart_id', 'product_id'),)
+
     id = Column(
         INTEGER,
         primary_key=True,

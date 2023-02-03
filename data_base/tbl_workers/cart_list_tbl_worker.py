@@ -24,17 +24,14 @@ class CartListTblWorker(CartList):
 
     @staticmethod
     async def update_product_count(cart_id: int, product_id: int, count: int, local_session):
-        try:
-            data_to_update = dict(count=CartList.count + count)
+        data_to_update = dict(count=CartList.count + count)
 
-            query = update(CartList). \
-                where(and_(CartList.cart_id == cart_id),
-                      and_(CartList.product_id == product_id)). \
-                values(data_to_update)
+        query = update(CartList). \
+            where(and_(CartList.cart_id == cart_id),
+                  and_(CartList.product_id == product_id)). \
+            values(data_to_update)
 
-            await local_session.execute(query)
-        except:
-            print("ERROR, record in cart list not found")
+        await local_session.execute(query)
 
     @staticmethod
     async def delete_product_from_cart(cart_id: int, product_id: int, local_session):
